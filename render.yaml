@@ -1,0 +1,7 @@
+services:
+  - name: flask-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 4 -b 0.0.0.0:5000 run:app --access-logfile access_log.log --error-logfile error_log.log
+    envVars:
+      FLASK_ENV: production
