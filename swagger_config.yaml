@@ -125,6 +125,30 @@ paths:
         - Business
       summary: Create a new business
       description: Register a new business
+      parameters:
+        - name: user_id
+          in: body
+          required: true
+          type: string
+          description: ID of the user
+        - name: business_id
+          in: body
+          required: true
+          type: string
+          description: ID of the business
+        - name: business_id
+          in: body
+          required: true
+          type: string
+          description: ID of the business
+
+      # Example object for BusinessCreate
+      example:
+        legalName: "My Company"
+        displayName: "My Business"
+        # Add example values for other properties
+
+
       requestBody:
         content:
           application/json:
@@ -299,38 +323,60 @@ definitions:
         type: string
         format: date-time
 
-  BusinessCreate:
+  BusinessCreate/Update:
     type: object
     properties:
       legalName:
         type: string
       displayName:
         type: string
-      # Include other properties
-
-  BusinessUpdate:
-    type: object
-    properties:
-      legalName:
+      websiteLink:
         type: string
-      displayName:
+      currency:
         type: string
-      # Include other properties
-
-  BusinessPatch:
-    type: object
-    properties:
-      legalName:
+      businessType:
         type: string
-      displayName:
+      businessGst:
         type: string
-      # Include other properties
-
-  BusinessUserRightsCreate:
-    type: object
-    properties:
+      businessPan:
+        type: string
+      businessLogo:
+        type: string
+      orderSystem:
+        type: boolean
+      email:
+        type: string
+      phoneCode:
+        type: string
+      phoneNumber:
+        type: string
+      fullAddress:
+        type: string
+      district:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      addressState:
+        type: string
+      postalCode:
+        type: string
+      directions:
+        type: string
       userId:
         type: string
-      businessId:
-        type: string
-      # Include other properties
+      productRights:
+        type: boolean
+      inventoryRights:
+        type: boolean
+      salesRights:
+        type: boolean
+      salesPosRights:
+        type: boolean
+      suppliersRights:
+        type: boolean
+      analyticsViewRights:
+        type: boolean
+      ownerRights:
+        type: boolean
