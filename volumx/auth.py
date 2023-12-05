@@ -63,7 +63,7 @@ def register():
             "createdAt": new_user.createdAt,
             "updatedAt": new_user.updatedAt
         }
-        return jsonify({'message': 'User registered. OTP sent to email for verification.', 'userData': userData}), 201
+        return jsonify({'message': 'User registered successfully.', 'userData': userData}), 201
     except Exception as e:
         current_app.log_exception(exc_info=e)
         return (
@@ -76,16 +76,6 @@ def register():
             ),
             500,
         )
-    #--------Logic to Send Email for confirmation --------
-
-#     # Generate and return an authentication token for the new user
-#     token = generate_token(new_user.id)  # Token expiration time: 10 minutes
-
-#     # Send an email with the tokenized link
-#     full_name = new_user.first_name + " " + new_user.last_name
-#     send_register_email(full_name, new_user.email, token)
-
- #   return jsonify({'message': 'User registered. Confirmation email sent.'}), 201
 
 # Endpoint to confirm the OTP sent to the email
 @auth_bp.route('/confirm_otp', methods=['POST'])
@@ -174,8 +164,8 @@ def delete_profile(user):
 
 # Endpoint to get all users
 @auth_bp.route('/users', methods=['GET'])
-@admin_required
-def get_users(user):
+#@admin_required
+def get_users():
     users = User.query.all()
     total = len(users)
     return jsonify([user.format() for user in users], "total_users:", total), 200

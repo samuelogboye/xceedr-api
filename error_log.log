@@ -883,3 +883,360 @@ Traceback (most recent call last):
 sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'business_user_rights.userId' could not find table 'user' with which to generate a foreign key to target column 'id'
 [2023-12-04 23:43:45 +0100] [71109] [INFO] Worker exiting (pid: 71109)
 [2023-12-04 23:43:45 +0100] [71104] [ERROR] Worker (pid:71109) exited with code 3
+[2023-12-05 00:34:02 +0100] [72106] [INFO] Starting gunicorn 21.2.0
+[2023-12-05 00:34:02 +0100] [72106] [INFO] Listening at: http://0.0.0.0:5000 (72106)
+[2023-12-05 00:34:02 +0100] [72106] [INFO] Using worker: sync
+[2023-12-05 00:34:02 +0100] [72108] [INFO] Booting worker with pid: 72108
+[2023-12-05 00:34:02 +0100] [72109] [INFO] Booting worker with pid: 72109
+[2023-12-05 00:34:02 +0100] [72110] [INFO] Booting worker with pid: 72110
+[2023-12-05 00:34:02 +0100] [72111] [INFO] Booting worker with pid: 72111
+[2023-12-05 00:34:03 +0100] [72110] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/samuel/Documents/freelance/xceedr-api/run.py", line 24, in <module>
+    app = create_app(app_config)
+  File "/home/samuel/Documents/freelance/xceedr-api/volumx/__init__.py", line 96, in create_app
+    db.create_all()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_sqlalchemy/extension.py", line 900, in create_all
+    self._call_for_binds(bind_key, "create_all")
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_sqlalchemy/extension.py", line 881, in _call_for_binds
+    getattr(metadata, op_name)(bind=engine)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 5828, in create_all
+    bind._run_ddl_visitor(
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 3243, in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2447, in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/visitors.py", line 671, in traverse_single
+    return meth(obj, **kw)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/ddl.py", line 897, in visit_metadata
+    collection = sort_tables_and_constraints(
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/ddl.py", line 1327, in sort_tables_and_constraints
+    dependent_on = fkc.referred_table
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 4751, in referred_table
+    return self.elements[0].column.table
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 1146, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 3159, in column
+    return self._resolve_column()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 3182, in _resolve_column
+    raise exc.NoReferencedTableError(
+sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'business_user_rights.userId' could not find table 'user' with which to generate a foreign key to target column 'id'
+[2023-12-05 00:34:03 +0100] [72109] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/samuel/Documents/freelance/xceedr-api/run.py", line 24, in <module>
+    app = create_app(app_config)
+  File "/home/samuel/Documents/freelance/xceedr-api/volumx/__init__.py", line 96, in create_app
+    db.create_all()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_sqlalchemy/extension.py", line 900, in create_all
+    self._call_for_binds(bind_key, "create_all")
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_sqlalchemy/extension.py", line 881, in _call_for_binds
+    getattr(metadata, op_name)(bind=engine)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 5828, in create_all
+    bind._run_ddl_visitor(
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 3243, in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2447, in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/visitors.py", line 671, in traverse_single
+    return meth(obj, **kw)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/ddl.py", line 897, in visit_metadata
+    collection = sort_tables_and_constraints(
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/ddl.py", line 1327, in sort_tables_and_constraints
+    dependent_on = fkc.referred_table
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 4751, in referred_table
+    return self.elements[0].column.table
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 1146, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 3159, in column
+    return self._resolve_column()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 3182, in _resolve_column
+    raise exc.NoReferencedTableError(
+sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'business_user_rights.userId' could not find table 'user' with which to generate a foreign key to target column 'id'
+[2023-12-05 00:34:03 +0100] [72109] [INFO] Worker exiting (pid: 72109)
+[2023-12-05 00:34:03 +0100] [72110] [INFO] Worker exiting (pid: 72110)
+[2023-12-05 00:34:03 +0100] [72106] [ERROR] Worker (pid:72109) exited with code 3
+[2023-12-05 00:34:03 +0100] [72106] [ERROR] Worker (pid:72110) exited with code 3
+[2023-12-05 00:34:03 +0100] [72108] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/samuel/Documents/freelance/xceedr-api/run.py", line 24, in <module>
+    app = create_app(app_config)
+  File "/home/samuel/Documents/freelance/xceedr-api/volumx/__init__.py", line 96, in create_app
+    db.create_all()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_sqlalchemy/extension.py", line 900, in create_all
+    self._call_for_binds(bind_key, "create_all")
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_sqlalchemy/extension.py", line 881, in _call_for_binds
+    getattr(metadata, op_name)(bind=engine)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 5828, in create_all
+    bind._run_ddl_visitor(
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 3243, in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2447, in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/visitors.py", line 671, in traverse_single
+    return meth(obj, **kw)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/ddl.py", line 897, in visit_metadata
+    collection = sort_tables_and_constraints(
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/ddl.py", line 1327, in sort_tables_and_constraints
+    dependent_on = fkc.referred_table
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 4751, in referred_table
+    return self.elements[0].column.table
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 1146, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 3159, in column
+    return self._resolve_column()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 3182, in _resolve_column
+    raise exc.NoReferencedTableError(
+sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'business_user_rights.userId' could not find table 'user' with which to generate a foreign key to target column 'id'
+[2023-12-05 00:34:03 +0100] [72108] [INFO] Worker exiting (pid: 72108)
+[2023-12-05 00:34:03 +0100] [72111] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/samuel/Documents/freelance/xceedr-api/run.py", line 24, in <module>
+    app = create_app(app_config)
+  File "/home/samuel/Documents/freelance/xceedr-api/volumx/__init__.py", line 96, in create_app
+    db.create_all()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_sqlalchemy/extension.py", line 900, in create_all
+    self._call_for_binds(bind_key, "create_all")
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_sqlalchemy/extension.py", line 881, in _call_for_binds
+    getattr(metadata, op_name)(bind=engine)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 5828, in create_all
+    bind._run_ddl_visitor(
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 3243, in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2447, in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/visitors.py", line 671, in traverse_single
+    return meth(obj, **kw)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/ddl.py", line 897, in visit_metadata
+    collection = sort_tables_and_constraints(
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/ddl.py", line 1327, in sort_tables_and_constraints
+    dependent_on = fkc.referred_table
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 4751, in referred_table
+    return self.elements[0].column.table
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 1146, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 3159, in column
+    return self._resolve_column()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/sqlalchemy/sql/schema.py", line 3182, in _resolve_column
+    raise exc.NoReferencedTableError(
+sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'business_user_rights.userId' could not find table 'user' with which to generate a foreign key to target column 'id'
+[2023-12-05 00:34:03 +0100] [72111] [INFO] Worker exiting (pid: 72111)
+[2023-12-05 00:35:52 +0100] [72369] [INFO] Starting gunicorn 21.2.0
+[2023-12-05 00:35:52 +0100] [72369] [INFO] Listening at: http://0.0.0.0:5000 (72369)
+[2023-12-05 00:35:52 +0100] [72369] [INFO] Using worker: sync
+[2023-12-05 00:35:52 +0100] [72374] [INFO] Booting worker with pid: 72374
+[2023-12-05 00:35:52 +0100] [72375] [INFO] Booting worker with pid: 72375
+[2023-12-05 00:35:52 +0100] [72377] [INFO] Booting worker with pid: 72377
+[2023-12-05 00:35:52 +0100] [72378] [INFO] Booting worker with pid: 72378
+[2023-12-05 00:39:02 +0100] [72369] [INFO] Handling signal: int
+[2023-12-05 00:39:02 +0100] [72378] [INFO] Worker exiting (pid: 72378)
+[2023-12-05 00:39:02 +0100] [72374] [INFO] Worker exiting (pid: 72374)
+[2023-12-05 00:39:02 +0100] [72377] [INFO] Worker exiting (pid: 72377)
+[2023-12-05 00:39:02 +0100] [72375] [INFO] Worker exiting (pid: 72375)
+[2023-12-05 00:39:02 +0100] [72369] [INFO] Shutting down: Master
+[2023-12-05 00:39:03 +0100] [73262] [INFO] Starting gunicorn 21.2.0
+[2023-12-05 00:39:03 +0100] [73262] [INFO] Listening at: http://0.0.0.0:5000 (73262)
+[2023-12-05 00:39:03 +0100] [73262] [INFO] Using worker: sync
+[2023-12-05 00:39:03 +0100] [73263] [INFO] Booting worker with pid: 73263
+[2023-12-05 00:39:03 +0100] [73264] [INFO] Booting worker with pid: 73264
+[2023-12-05 00:39:03 +0100] [73265] [INFO] Booting worker with pid: 73265
+[2023-12-05 00:39:03 +0100] [73266] [INFO] Booting worker with pid: 73266
+[2023-12-05 00:40:57,950] ERROR in app: Exception on /api/v1/business/ [GET]
+Traceback (most recent call last):
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+TypeError: get_business_data() missing 1 required positional argument: 'business_id'
+[2023-12-05 00:43:45 +0100] [73262] [INFO] Handling signal: int
+[2023-12-05 00:43:45 +0100] [73265] [INFO] Worker exiting (pid: 73265)
+[2023-12-05 00:43:45 +0100] [73263] [INFO] Worker exiting (pid: 73263)
+[2023-12-05 00:43:45 +0100] [73264] [INFO] Worker exiting (pid: 73264)
+[2023-12-05 00:43:45 +0100] [73266] [INFO] Worker exiting (pid: 73266)
+[2023-12-05 00:43:45 +0100] [73262] [INFO] Shutting down: Master
+[2023-12-05 00:43:46 +0100] [73620] [INFO] Starting gunicorn 21.2.0
+[2023-12-05 00:43:46 +0100] [73620] [INFO] Listening at: http://0.0.0.0:5000 (73620)
+[2023-12-05 00:43:46 +0100] [73620] [INFO] Using worker: sync
+[2023-12-05 00:43:46 +0100] [73621] [INFO] Booting worker with pid: 73621
+[2023-12-05 00:43:46 +0100] [73622] [INFO] Booting worker with pid: 73622
+[2023-12-05 00:43:46 +0100] [73625] [INFO] Booting worker with pid: 73625
+[2023-12-05 00:43:46 +0100] [73627] [INFO] Booting worker with pid: 73627
+[2023-12-05 00:44:56 +0100] [73620] [INFO] Handling signal: int
+[2023-12-05 00:44:56 +0100] [73621] [INFO] Worker exiting (pid: 73621)
+[2023-12-05 00:44:56 +0100] [73622] [INFO] Worker exiting (pid: 73622)
+[2023-12-05 00:44:56 +0100] [73625] [INFO] Worker exiting (pid: 73625)
+[2023-12-05 00:44:56 +0100] [73627] [INFO] Worker exiting (pid: 73627)
+[2023-12-05 00:44:56 +0100] [73620] [INFO] Shutting down: Master
+[2023-12-05 00:44:57 +0100] [73754] [INFO] Starting gunicorn 21.2.0
+[2023-12-05 00:44:57 +0100] [73754] [INFO] Listening at: http://0.0.0.0:5000 (73754)
+[2023-12-05 00:44:57 +0100] [73754] [INFO] Using worker: sync
+[2023-12-05 00:44:57 +0100] [73756] [INFO] Booting worker with pid: 73756
+[2023-12-05 00:44:57 +0100] [73757] [INFO] Booting worker with pid: 73757
+[2023-12-05 00:44:57 +0100] [73758] [INFO] Booting worker with pid: 73758
+[2023-12-05 00:44:57 +0100] [73759] [INFO] Booting worker with pid: 73759
+[2023-12-05 00:51:15 +0100] [73754] [INFO] Handling signal: winch
+[2023-12-05 00:54:04 +0100] [73754] [INFO] Handling signal: winch
+[2023-12-05 00:57:23 +0100] [73754] [INFO] Handling signal: int
+[2023-12-05 00:57:23 +0100] [73756] [INFO] Worker exiting (pid: 73756)
+[2023-12-05 00:57:23 +0100] [73757] [INFO] Worker exiting (pid: 73757)
+[2023-12-05 00:57:23 +0100] [73759] [INFO] Worker exiting (pid: 73759)
+[2023-12-05 00:57:23 +0100] [73758] [INFO] Worker exiting (pid: 73758)
+[2023-12-05 00:57:23 +0100] [73754] [INFO] Shutting down: Master
+[2023-12-05 00:57:24 +0100] [74527] [INFO] Starting gunicorn 21.2.0
+[2023-12-05 00:57:24 +0100] [74527] [INFO] Listening at: http://0.0.0.0:5000 (74527)
+[2023-12-05 00:57:24 +0100] [74527] [INFO] Using worker: sync
+[2023-12-05 00:57:24 +0100] [74528] [INFO] Booting worker with pid: 74528
+[2023-12-05 00:57:24 +0100] [74530] [INFO] Booting worker with pid: 74530
+[2023-12-05 00:57:24 +0100] [74531] [INFO] Booting worker with pid: 74531
+[2023-12-05 00:57:24 +0100] [74532] [INFO] Booting worker with pid: 74532
+[2023-12-05 00:57:53,315] ERROR in app: Exception on /api/v1/auth/users [GET]
+Traceback (most recent call last):
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/samuel/Documents/freelance/xceedr-api/venv/lib/python3.10/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+TypeError: get_users() missing 1 required positional argument: 'user'
+[2023-12-05 00:58:12 +0100] [74527] [INFO] Handling signal: int
+[2023-12-05 00:58:12 +0100] [74528] [INFO] Worker exiting (pid: 74528)
+[2023-12-05 00:58:12 +0100] [74531] [INFO] Worker exiting (pid: 74531)
+[2023-12-05 00:58:12 +0100] [74532] [INFO] Worker exiting (pid: 74532)
+[2023-12-05 00:58:12 +0100] [74530] [INFO] Worker exiting (pid: 74530)
+[2023-12-05 00:58:13 +0100] [74527] [INFO] Shutting down: Master
+[2023-12-05 00:58:13 +0100] [74669] [INFO] Starting gunicorn 21.2.0
+[2023-12-05 00:58:13 +0100] [74669] [INFO] Listening at: http://0.0.0.0:5000 (74669)
+[2023-12-05 00:58:13 +0100] [74669] [INFO] Using worker: sync
+[2023-12-05 00:58:13 +0100] [74671] [INFO] Booting worker with pid: 74671
+[2023-12-05 00:58:13 +0100] [74672] [INFO] Booting worker with pid: 74672
+[2023-12-05 00:58:13 +0100] [74674] [INFO] Booting worker with pid: 74674
+[2023-12-05 00:58:13 +0100] [74675] [INFO] Booting worker with pid: 74675
+[2023-12-05 01:01:03 +0100] [74669] [INFO] Handling signal: int
+[2023-12-05 01:01:03 +0100] [74671] [INFO] Worker exiting (pid: 74671)
+[2023-12-05 01:01:03 +0100] [74674] [INFO] Worker exiting (pid: 74674)
+[2023-12-05 01:01:03 +0100] [74672] [INFO] Worker exiting (pid: 74672)
+[2023-12-05 01:01:03 +0100] [74675] [INFO] Worker exiting (pid: 74675)
+[2023-12-05 01:01:03 +0100] [74669] [INFO] Shutting down: Master
+[2023-12-05 01:01:04 +0100] [74874] [INFO] Starting gunicorn 21.2.0
+[2023-12-05 01:01:04 +0100] [74874] [INFO] Listening at: http://0.0.0.0:5000 (74874)
+[2023-12-05 01:01:04 +0100] [74874] [INFO] Using worker: sync
+[2023-12-05 01:01:04 +0100] [74876] [INFO] Booting worker with pid: 74876
+[2023-12-05 01:01:04 +0100] [74878] [INFO] Booting worker with pid: 74878
+[2023-12-05 01:01:04 +0100] [74879] [INFO] Booting worker with pid: 74879
+[2023-12-05 01:01:04 +0100] [74880] [INFO] Booting worker with pid: 74880
+[2023-12-05 01:12:38 +0100] [74874] [INFO] Handling signal: int
+[2023-12-05 01:12:38 +0100] [74876] [INFO] Worker exiting (pid: 74876)
+[2023-12-05 01:12:38 +0100] [74878] [INFO] Worker exiting (pid: 74878)
+[2023-12-05 01:12:38 +0100] [74879] [INFO] Worker exiting (pid: 74879)
+[2023-12-05 01:12:38 +0100] [74880] [INFO] Worker exiting (pid: 74880)
+[2023-12-05 01:12:38 +0100] [74874] [INFO] Shutting down: Master
+[2023-12-05 01:12:39 +0100] [75519] [INFO] Starting gunicorn 21.2.0
+[2023-12-05 01:12:39 +0100] [75519] [INFO] Listening at: http://0.0.0.0:5000 (75519)
+[2023-12-05 01:12:39 +0100] [75519] [INFO] Using worker: sync
+[2023-12-05 01:12:39 +0100] [75521] [INFO] Booting worker with pid: 75521
+[2023-12-05 01:12:39 +0100] [75522] [INFO] Booting worker with pid: 75522
+[2023-12-05 01:12:39 +0100] [75523] [INFO] Booting worker with pid: 75523
+[2023-12-05 01:12:39 +0100] [75524] [INFO] Booting worker with pid: 75524
+[2023-12-05 01:13:06 +0100] [75519] [INFO] Handling signal: int
+[2023-12-05 01:13:06 +0100] [75523] [INFO] Worker exiting (pid: 75523)
+[2023-12-05 01:13:06 +0100] [75524] [INFO] Worker exiting (pid: 75524)
+[2023-12-05 01:13:06 +0100] [75522] [INFO] Worker exiting (pid: 75522)
+[2023-12-05 01:13:06 +0100] [75521] [INFO] Worker exiting (pid: 75521)
+[2023-12-05 01:13:06 +0100] [75519] [INFO] Shutting down: Master

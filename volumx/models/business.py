@@ -47,7 +47,7 @@ class BusinessUserRights(BaseModel):
     __tablename__ = 'business_user_rights'
 
     businessId = db.Column(db.String(50), db.ForeignKey('business.id'),primary_key=True)
-    userId = db.Column(db.String(50), db.ForeignKey('user.id'),primary_key=True)
+    userId = db.Column(db.String(50), db.ForeignKey('users.id'),primary_key=True)
     productRights = db.Column(db.Boolean, default=True)
     inventoryRights = db.Column(db.Boolean, default=True)
     salesRights = db.Column(db.Boolean, default=True)
