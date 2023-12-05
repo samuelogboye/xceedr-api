@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from volumx.models.business import Business, Contact, Address, BusinessUserRights
+from volumx.models.user import User
 from volumx import db
 from volumx.business.business_schemas import IdSchema
 from datetime import datetime, timedelta
@@ -126,10 +127,26 @@ def create_business():
                 if field not in data:
                         return jsonify({"error": f"{field} is required"}), 400
 
+        # Check if the user exists by checking email and phone number in Contact Model
+        email_exists = Contact.query.filter_by(email=data['email']).first()
+        phone_exists = Contact.query.filter_by(phoneNumber=data['phoneNumber']).first()
+        print(email_exists)
+        print(phone_exists)
+
+        if email_exists or phone_exists:
+            return jsonify({"error": "Business already exists with the same email and phone number"}), 409
+
+
+        # Check if the user exists
+        user = User.query.get(data['userId'])
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
         # Check if the business already exists
-        business = Business.query.filter_by(legalName=data['legalName']).first()
-        if business:
-            return jsonify({"error": "Business already exists"}), 409
+        legal_name_exists = Business.query.filter_by(legalName=data['legalName']).first()
+        display_name_exists = Business.query.filter_by(displayName=data['displayName']).first()
+        if legal_name_exists or display_name_exists:
+            return jsonify({"error": "Business already exists with the same Legal name and display name"}), 409
 
         # Create a new address
         address = Address(
@@ -181,7 +198,7 @@ def create_business():
         )
         business_user_rights.insert()
 
-        return jsonify({"message": "Business created successfully"}), 201
+        return jsonify({"message": "Business created successfully", "businessId": business.id}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
