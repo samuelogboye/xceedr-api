@@ -9,12 +9,14 @@ from datetime import datetime, timedelta
 from random import randint
 from .auth_utils import login_required, admin_required
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, decode_token, get_jwt_identity, get_jwt
+from flasgger import swag_from
 
 # Create a Blueprint for authentication routes
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
 
 # Endpoint for user registration
 @auth_bp.route('/register', methods=['POST'])
+@swag_from('../swagger_config.yaml')
 def register():
     data = request.json
     # Check if required fields are present in the request data
@@ -76,32 +78,6 @@ def register():
             ),
             500,
         )
-
-# Endpoint to confirm the OTP sent to the email
-@auth_bp.route('/confirm_otp', methods=['POST'])
-def confirm_otp():
-    data = request.json
-
-    if 'email' not in data or 'otp' not in data:
-        return jsonify({'message': 'Incomplete data'}), 400
-
-    user = User.query.filter_by(email=data['email']).first()
-    if not user:
-        return jsonify({'message': 'User not found'}), 404
-
-    otp = str(data['otp'])
-
-    if not user.otp or user.otp != otp:
-        return jsonify({'message': 'Invalid OTP'}), 400
-
-    if datetime.now() > user.otp_expiry:
-        return jsonify({'message': 'OTP expired'}), 400
-
-    # OTP matches and is within the expiry time, confirm the email
-    user.email_confirmed = True
-    user.update()
-    return jsonify({'message': 'Email confirmed successfully'}), 200
-
 
 # Endpoint for user login and token generation
 @auth_bp.route('/login', methods=['POST'])

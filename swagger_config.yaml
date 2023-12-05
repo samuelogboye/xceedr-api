@@ -1,0 +1,336 @@
+swagger: "2.0"
+info:
+  title: "Volumx Business API"
+  description: "Endpoints for managing businesses and user rights"
+  version: "1.0"
+
+schemes:
+  - http
+  - https
+
+definitions:
+  BusinessCreate:
+    type: object
+    properties:
+      legalName:
+        type: string
+      displayName:
+        type: string
+      # Add other properties for creating a business
+
+      # Example object for BusinessCreate
+    example:
+      legalName: "My Company"
+      displayName: "My Business"
+      # Add example values for other properties
+
+paths:
+  /api/v1/business/{business_id}:
+    get:
+      tags:
+        - Business
+      summary: Get business data by ID
+      description: Retrieve details of a specific business by ID
+      parameters:
+        - name: business_id
+          in: path
+          required: true
+          type: string
+          description: ID of the business
+      responses:
+        "200":
+          description: Successful response
+      "404":
+        description: Business not found
+
+    put:
+      tags:
+        - Business
+      summary: Update business by ID
+      description: Update details of a specific business by ID
+      parameters:
+        - name: business_id
+          in: path
+          required: true
+          type: string
+          description: ID of the business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/BusinessUpdate"
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Bad request
+
+    patch:
+      tags:
+        - Business
+      summary: Patch business by ID
+      description: Partially update details of a specific business by ID
+      parameters:
+        - name: business_id
+          in: path
+          required: true
+          type: string
+          description: ID of the business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/BusinessPatch"
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Bad request
+        "404":
+          description: Business not found
+
+    delete:
+      tags:
+        - Business
+      summary: Delete business by ID
+      description: Remove a specific business by ID
+      parameters:
+        - name: business_id
+          in: path
+          required: true
+          type: string
+          description: ID of the business
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Bad request
+        "404":
+          description: Business not found
+
+  /api/v1/business/:
+    get:
+      tags:
+        - Business
+      summary: Get all businesses
+      description: Retrieve details of all businesses
+      responses:
+        "200":
+          description: Successful response
+      "404":
+        description: Businesses not found
+
+    post:
+      tags:
+        - Business
+      summary: Create a new business
+      description: Register a new business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/BusinessCreate"
+      responses:
+        "201":
+          description: Successful creation
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/BusinessResponse"
+              example:
+                message: Business created successfully
+                businessId: "12345"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/Error"
+              example:
+                error: Invalid data provided
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/Error"
+              example:
+                error: User not found
+
+  /api/v1/business/user_rights/{user_id}:
+    get:
+      tags:
+        - Business User Rights
+      summary: Get business user rights by User ID
+      description: Retrieve user rights for a specific user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+          description: ID of the user
+      responses:
+        "200":
+          description: Successful response
+      "404":
+        description: User not found
+
+  /api/v1/business/user_rights:
+    get:
+      tags:
+        - Business User Rights
+      summary: Get all business user rights
+      description: Retrieve user rights for all businesses
+      responses:
+        "200":
+          description: Successful response
+      "404":
+        description: Business user rights not found
+
+    post:
+      tags:
+        - Business User Rights
+      summary: Create business user rights
+      description: Register user rights for a business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/BusinessUserRightsCreate"
+      responses:
+        "201":
+          description: Successful response
+        "400":
+          description: Bad request
+        "404":
+          description: Business not found
+
+
+  /api/v1/auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: User registration
+      description: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Incomplete registration data
+        '500':
+          description: Internal server error
+
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login and token generation
+      description: Authenticate and generate access tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Logged in successfully
+          content:
+            application/json:
+        '400':
+          description: Email and password are required
+        '401':
+          description: Invalid email or password
+
+
+definitions:
+  UserData:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email_confirmed:
+        type: boolean
+      profile_picture:
+        type: string
+      is_active:
+        type: boolean
+      is_admin:
+        type: boolean
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+  BusinessCreate:
+    type: object
+    properties:
+      legalName:
+        type: string
+      displayName:
+        type: string
+      # Include other properties
+
+  BusinessUpdate:
+    type: object
+    properties:
+      legalName:
+        type: string
+      displayName:
+        type: string
+      # Include other properties
+
+  BusinessPatch:
+    type: object
+    properties:
+      legalName:
+        type: string
+      displayName:
+        type: string
+      # Include other properties
+
+  BusinessUserRightsCreate:
+    type: object
+    properties:
+      userId:
+        type: string
+      businessId:
+        type: string
+      # Include other properties

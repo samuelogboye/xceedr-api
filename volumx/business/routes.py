@@ -127,6 +127,11 @@ def create_business():
                 if field not in data:
                         return jsonify({"error": f"{field} is required"}), 400
 
+        # Check if the user exists
+        user = User.query.get(data['userId'])
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
         # Check if the user exists by checking email and phone number in Contact Model
         email_exists = Contact.query.filter_by(email=data['email']).first()
         phone_exists = Contact.query.filter_by(phoneNumber=data['phoneNumber']).first()
@@ -136,11 +141,6 @@ def create_business():
         if email_exists or phone_exists:
             return jsonify({"error": "Business already exists with the same email and phone number"}), 409
 
-
-        # Check if the user exists
-        user = User.query.get(data['userId'])
-        if not user:
-            return jsonify({"error": "User not found"}), 404
 
         # Check if the business already exists
         legal_name_exists = Business.query.filter_by(legalName=data['legalName']).first()
@@ -218,6 +218,33 @@ def update_business(business_id):
                 if field not in data:
                         return jsonify({"error": f"{field} is required"}), 400
 
+        # Check if the user exists
+        user = User.query.get(data['userId'])
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Check if the business exists
+        business = Business.query.get(business_id)
+        if not business:
+            return jsonify({"error": "Business not found"}), 404
+
+        # Check if the user exists by checking email and phone number in Contact Model
+        email_exists = Contact.query.filter_by(email=data['email']).first()
+        phone_exists = Contact.query.filter_by(phoneNumber=data['phoneNumber']).first()
+        print(email_exists)
+        print(phone_exists)
+
+        if email_exists or phone_exists:
+            return jsonify({"error": "Business already exists with the same email and phone number"}), 409
+
+
+        # Check if the business already exists
+        legal_name_exists = Business.query.filter_by(legalName=data['legalName']).first()
+        display_name_exists = Business.query.filter_by(displayName=data['displayName']).first()
+        if legal_name_exists or display_name_exists:
+            return jsonify({"error": "Business already exists with the same Legal name and display name"}), 409
+
+
         # Check if the business exists
         business = Business.query.get(business_id)
         if not business:
@@ -255,6 +282,8 @@ def update_business(business_id):
 
         # Update the business user rights
         business_user_rights = BusinessUserRights.query.filter_by(businessId=business.id, userId=data['userId']).first()
+        if not business_user_rights:
+            return jsonify({"error": "Business user rights not found"}), 404
         business_user_rights.productRights = data['productRights']
         business_user_rights.inventoryRights = data['inventoryRights']
         business_user_rights.salesRights = data['salesRights']
@@ -308,33 +337,6 @@ def patch_business(business_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-# Route to Update Business User Rights
-@business_bp.route('/<business_id>/user_rights', methods=['PATCH'])
-def patch_business_user_rights(business_id):
-    try:
-        data = request.json
-
-        # Validate the data
-        if not data:
-            return jsonify({"error": "No data provided"}), 400
-
-        # Check if the business exists
-        business = Business.query.get(business_id)
-        if not business:
-            return jsonify({"error": "Business not found"}), 404
-
-        # Update the business user rights
-        business_user_rights = BusinessUserRights.query.filter_by(businessId=business.id, userId=data['userId']).first()
-        for field in ['productRights', 'inventoryRights', 'salesRights', 'salesPosRights', 'suppliersRights', 'analyticsViewRights', 'ownerRights']:
-             if field in data:
-                  setattr(business_user_rights, field, data[field])
-
-        business_user_rights.update()
-
-        return jsonify({"message": "Business user rights patched successfully"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
-
 # Route to delete a business
 @business_bp.route('/<business_id>', methods=['DELETE'])
 def delete_business(business_id):
@@ -363,3 +365,148 @@ def delete_business(business_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+# Works
+# Route to get the Business User Rights by User ID
+@business_bp.route('/user_rights/<user_id>', methods=['GET'])
+def get_business_user_rights(user_id):
+    try:
+        # Check if the user exists
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Get the business user rights
+        business_user_rights = BusinessUserRights.query.filter_by(userId=user.id).all()
+        if not business_user_rights:
+            return jsonify({"error": "Business user rights not found"}), 404
+
+        business_user_rights_data = []
+
+        for business_user_right in business_user_rights:
+            business_user_right_data = {
+                "businessId": business_user_right.businessId,
+                "userId": business_user_right.userId,
+                "productRights": business_user_right.productRights,
+                "inventoryRights": business_user_right.inventoryRights,
+                "salesRights": business_user_right.salesRights,
+                "salesPosRights": business_user_right.salesPosRights,
+                "suppliersRights": business_user_right.suppliersRights,
+                "analyticsViewRights": business_user_right.analyticsViewRights,
+                "ownerRights": business_user_right.ownerRights
+            }
+
+            business_user_rights_data.append(business_user_right_data)
+
+        return jsonify(business_user_rights_data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+# WOrks
+# Route to get all Business User Rights
+@business_bp.route('/user_rights', methods=['GET'])
+def get_all_business_user_rights():
+    try:
+        # Get the business user rights
+        business_user_rights = BusinessUserRights.query.all()
+        if not business_user_rights:
+            return jsonify({"error": "Business user rights not found"}), 404
+
+        business_user_rights_data = []
+
+        for business_user_right in business_user_rights:
+            business_user_right_data = {
+                "id": business_user_right.id,
+                "businessId": business_user_right.businessId,
+                "userId": business_user_right.userId,
+                "productRights": business_user_right.productRights,
+                "inventoryRights": business_user_right.inventoryRights,
+                "salesRights": business_user_right.salesRights,
+                "salesPosRights": business_user_right.salesPosRights,
+                "suppliersRights": business_user_right.suppliersRights,
+                "analyticsViewRights": business_user_right.analyticsViewRights,
+                "ownerRights": business_user_right.ownerRights
+            }
+
+            business_user_rights_data.append(business_user_right_data)
+
+        return jsonify(business_user_rights_data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+# Works
+# Route to get the Business User Rights by Business ID
+@business_bp.route('/<business_id>/user_rights', methods=['GET'])
+def get_business_user_rights_by_business_id(business_id):
+    try:
+        # Check if the business exists
+        business = Business.query.get(business_id)
+        if not business:
+            return jsonify({"error": "Business not found"}), 404
+
+        # Get the business user rights
+        business_user_rights = BusinessUserRights.query.filter_by(businessId=business.id).all()
+        if not business_user_rights:
+            return jsonify({"error": "Business user rights not found"}), 404
+
+        business_user_rights_data = []
+
+        for business_user_right in business_user_rights:
+            business_user_right_data = {
+                "id": business_user_right.id,
+                "businessId": business_user_right.businessId,
+                "userId": business_user_right.userId,
+                "productRights": business_user_right.productRights,
+                "inventoryRights": business_user_right.inventoryRights,
+                "salesRights": business_user_right.salesRights,
+                "salesPosRights": business_user_right.salesPosRights,
+                "suppliersRights": business_user_right.suppliersRights,
+                "analyticsViewRights": business_user_right.analyticsViewRights,
+                "ownerRights": business_user_right.ownerRights
+            }
+
+            business_user_rights_data.append(business_user_right_data)
+
+        return jsonify(business_user_rights_data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+# Works
+# Route to update a business user rights by business ID PATCH
+@business_bp.route('/<business_id>/user_rights', methods=['PATCH'])
+def patch_business_user_rights_by_business_id(business_id):
+    try:
+        data = request.json
+
+        # Validate the data
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+
+        # Check if the business exists
+        business = Business.query.get(business_id)
+        if not business:
+            return jsonify({"error": "Business not found"}), 404
+
+        # Update the business user rights
+        business_user_rights = BusinessUserRights.query.filter_by(businessId=business_id).first()
+        for field in ['productRights', 'inventoryRights', 'salesRights', 'salesPosRights', 'suppliersRights', 'analyticsViewRights', 'ownerRights', 'userId']:
+             if field in data:
+                  setattr(business_user_rights, field, data[field])
+
+        business_user_rights.update()
+
+        business_user_right_data = {
+                "id": business_user_rights.id,
+                "businessId": business_user_rights.businessId,
+                "userId": business_user_rights.userId,
+                "productRights": business_user_rights.productRights,
+                "inventoryRights": business_user_rights.inventoryRights,
+                "salesRights": business_user_rights.salesRights,
+                "salesPosRights": business_user_rights.salesPosRights,
+                "suppliersRights": business_user_rights.suppliersRights,
+                "analyticsViewRights": business_user_rights.analyticsViewRights,
+                "ownerRights": business_user_rights.ownerRights
+            }
+
+        return jsonify({"message": "Business user rights patched successfully", "business_user_right": business_user_right_data}), 200
+    except Exception as e:
+        return jsonify({"errors": str(e)}), 400
