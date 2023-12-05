@@ -125,22 +125,18 @@ paths:
         - Business
       summary: Create a new business
       description: Register a new business
-      parameters:
-        - name: user_id
-          in: body
-          required: true
-          type: string
-          description: ID of the user
-        - name: business_id
-          in: body
-          required: true
-          type: string
-          description: ID of the business
-        - name: business_id
-          in: body
-          required: true
-          type: string
-          description: ID of the business
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/BusinessCreate"
+            example:
+              legalName: "My Company"
+              displayName: "My Business"
+              websiteLink: "https://example.com"
+              currency: "USD"
+              businessType: "Retail"
 
       # Example object for BusinessCreate
       example:
@@ -327,13 +323,17 @@ definitions:
     type: object
     properties:
       legalName:
-        type: string
+        example: "My Company"
       displayName:
         type: string
+        example: "My Business"
       websiteLink:
         type: string
+        format: uri
+        example: "https://example.com"
       currency:
         type: string
+        example: "USD"
       businessType:
         type: string
       businessGst:
